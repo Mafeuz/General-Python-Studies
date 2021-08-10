@@ -3,8 +3,6 @@
 
 # ## ULTIMATE PYTHON SNAKE GAME SKETCH USING OPENCV ##
 
-# In[1]:
-
 import numpy as np
 import matplotlib.pyplot as plt
 import random
@@ -13,10 +11,8 @@ import cv2
 import pyglet
 import time
 
+
 # sound files from: https://opengameart.org/content/8-bit-sound-effect-pack-vol-001 credits to @Shades
-
-# In[2]:
-
 
 def paint_grid(LEVEL):
     # Generate Game Grid
@@ -44,10 +40,6 @@ def paint_snake_grid(head, body_before, grid):
 
     return grid
 
-
-# In[3]:
-
-
 def Rand_Point(grid, LEVEL, SCORE):
     while True:
         x = random.randint(1+LEVEL,38-LEVEL)
@@ -62,10 +54,6 @@ def Rand_Point(grid, LEVEL, SCORE):
             break   
             
     return x, y
-
-
-# In[4]:
-
 
 def Start_Conditions():
     
@@ -92,10 +80,6 @@ def Start_Conditions():
     
     return head, body_before, direction, grid, new_body, got_point_1, got_point_2, SCORE, LEVEL, old_lvl, new_lvl
 
-
-# In[5]:
-
-
 ###################################### Start Conditions ###############################################
 
 head, body_before, direction, grid, new_body, got_point_1, got_point_2, SCORE, LEVEL, old_lvl, new_lvl = Start_Conditions()
@@ -104,14 +88,14 @@ head, body_before, direction, grid, new_body, got_point_1, got_point_2, SCORE, L
 
 # Game Soundtrack:
 player = pyglet.media.Player()
-player.queue(pyglet.resource.media("spacesong2.mp3", streaming=False))
+player.queue(pyglet.resource.media("media_data/spacesong2.mp3", streaming=False))
 player.play()
 start_time = time.time()
 end_time = 0
 
 #######################################################################################################
 # Game Title Intro Screen:
-snake_intro = cv2.imread('sekiro_snake.jpg')
+snake_intro = cv2.imread('media_data/sekiro_snake.jpg')
 snake_intro = cv2.resize(snake_intro,(400,400))
 cv2.putText(snake_intro, "ULTIMATE PYTHON SNAKE", (40, 300),cv2.FONT_HERSHEY_SIMPLEX, 0.8, (255, 50, 50), 2)
 cv2.imshow('SNAKE', snake_intro)
@@ -127,11 +111,11 @@ while True:
         start_time = time.time()
         player.pause()
         player = pyglet.media.Player()
-        player.queue(pyglet.resource.media("spacesong2.mp3", streaming=False))
+        player.queue(pyglet.resource.media("media_data/spacesong2.mp3", streaming=False))
         player.play()
     
     # Snake Sound Effect:
-    pyglet.resource.media("pac.wav", streaming=False).play()
+    pyglet.resource.media("media_data/pac.wav", streaming=False).play()
     
     ###################################################################################################
     # Keyboard Configuration:
@@ -184,7 +168,7 @@ while True:
         x2, y2 = Rand_Point(grid, LEVEL, SCORE)
         
         # Level UP Screens:
-        snake_image = 'snake_' + str(LEVEL) + '.jpg'
+        snake_image = 'media_data/snake_' + str(LEVEL) + '.jpg'
         snake_show = cv2.imread(snake_image)
         snake_show = cv2.resize(snake_show,(400,400))
         
@@ -199,11 +183,11 @@ while True:
             cv2.waitKey(1)
             
             creds_player = pyglet.media.Player()
-            creds_player.queue(pyglet.resource.media("Creds.mp3", streaming=False))
+            creds_player.queue(pyglet.resource.media("media_data/Creds.mp3", streaming=False))
             creds_player.play()
             plt.pause(5)
             
-            Credits = cv2.imread('Credits.png')
+            Credits = cv2.imread('media_data/Credits.png')
             Credits = cv2.resize(Credits,(400,400))
             
             while True:
@@ -219,7 +203,7 @@ while True:
             
         cv2.imshow('SNAKE', snake_show)
         cv2.waitKey(1)
-        pyglet.resource.media("fanfare.mp3", streaming=False).play()
+        pyglet.resource.media("media_data/fanfare.mp3", streaming=False).play()
         plt.pause(3)
     
     ###################################################################################################
@@ -247,7 +231,7 @@ while True:
         body_add = tuple(map(operator.sub, body_before[len(body_before)-1], direction))
         new_body.append(body_add)
         body_before.append(body_add)
-        pyglet.resource.media("Coin 2.wav", streaming=False).play()
+        pyglet.resource.media("media_data/Coin 2.wav", streaming=False).play()
         
         # Update score:
         SCORE += 1
@@ -261,7 +245,7 @@ while True:
         body_add = tuple(map(operator.sub, body_before[len(body_before)-1], direction))
         new_body.append(body_add)
         body_before.append(body_add)
-        pyglet.resource.media("Coin 2.wav", streaming=False).play()
+        pyglet.resource.media("media_data/Coin 2.wav", streaming=False).play()
         
         # Update score:
         SCORE += 1         
@@ -302,15 +286,15 @@ while True:
     
     if (grid[Death_Cond] == 255) or (grid[Death_Cond] == 25):
         # Death Screen:
-        frame = cv2.imread('DEATH.jpg')
+        frame = cv2.imread('media_data/DEATH.jpg')
         frame = cv2.resize(frame,(400,400))
         cv2.putText(frame, 'SCORE: {}'.format(SCORE), (165, 330),cv2.FONT_HERSHEY_SIMPLEX, 0.6, (30, 30, 255), 2)
         cv2.putText(frame, "RESTARTING...", (155, 90),cv2.FONT_HERSHEY_SIMPLEX, 0.6, (30, 30, 255), 2)
         cv2.imshow('SNAKE', frame)
         
         # Death Sound Effect:
-        pyglet.resource.media("Wrong 1.wav", streaming=False).play()
-        pyglet.resource.media("DEATH.mp3", streaming=False).play()
+        pyglet.resource.media("media_data/Wrong 1.wav", streaming=False).play()
+        pyglet.resource.media("media_data/DEATH.mp3", streaming=False).play()
         cv2.waitKey(1)
         plt.pause(3) # Wait for Death Screen
         
@@ -356,15 +340,6 @@ while True:
     
 cv2.destroyAllWindows()
 player.pause()
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
 
 
 
